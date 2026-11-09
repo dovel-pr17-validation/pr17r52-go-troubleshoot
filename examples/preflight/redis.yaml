@@ -1,0 +1,24 @@
+apiVersion: troubleshoot.sh/v1beta2
+kind: Preflight
+metadata:
+  name: sample
+spec:
+  collectors:
+    - redis:
+        collectorName: my-redis
+        uri: rediss://default:replicated@server:6380
+        tls:
+          skipVerify: true
+  analyzers:
+    - redis:
+        checkName: Must be redis 5.x or later
+        collectorName: my-redis
+        outcomes:
+          - fail:
+              when: "connected == false"
+              message: Cannot connect to redis server
+          - fail:
+              when: "version < 5.0.0"
+              message: The redis server must be at least version 5
+          - pass:
+              message: The redis connection checks out

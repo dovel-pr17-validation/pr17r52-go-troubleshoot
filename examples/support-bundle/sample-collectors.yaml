@@ -1,0 +1,6 @@
+apiVersion: troubleshoot.sh/v1beta2
+kind: Collector
+metadata:
+  name: collector-sample
+spec:
+  collectors: []
